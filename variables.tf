@@ -12,3 +12,7 @@ variable "region" {
   type        = string
   description = "This is the main region that is going to be used for this project"
 }
+
+variable "common_tags" {
+  description = "Common tags that are applied globally"
+}
