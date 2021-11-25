@@ -1,6 +1,28 @@
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "s3" {
+  statement {
+    sid = "PublicReadGetObject"
+
+    principals {
+      type        = "AWS"
+      identifiers = [data.aws_caller_identity.current.account_id]
+      # identifiers = "*"
+    }
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.bucket_name}/*"
+    ]
+  }
+}
+
 resource "aws_s3_bucket" "www_bucket" {
   bucket = var.bucket_name
   acl    = "public-read"
+  # policy = var.iam_policy
+  policy = data.aws_iam_policy_document.s3.json
 
   cors_rule {
     allowed_headers = ["Authorization", "Content-Length"]

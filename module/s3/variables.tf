@@ -9,3 +9,5 @@ variable "common_tags" {
 variable "domain_name" {
   type = string
 }
+
+# variable "iam_policy" {}
